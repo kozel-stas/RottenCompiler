@@ -99,6 +99,18 @@ public class RottenLanguageBaseListener implements RottenLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPrint_string(RottenLanguageParser.Print_stringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrint_string(RottenLanguageParser.Print_stringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOperations(RottenLanguageParser.OperationsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -106,6 +118,54 @@ public class RottenLanguageBaseListener implements RottenLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOperations(RottenLanguageParser.OperationsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSimple_compare(RottenLanguageParser.Simple_compareContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSimple_compare(RottenLanguageParser.Simple_compareContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterHard_compare(RottenLanguageParser.Hard_compareContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitHard_compare(RottenLanguageParser.Hard_compareContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhile_cicle(RottenLanguageParser.While_cicleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhile_cicle(RottenLanguageParser.While_cicleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIf_then(RottenLanguageParser.If_thenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIf_then(RottenLanguageParser.If_thenContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

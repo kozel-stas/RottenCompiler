@@ -52,11 +52,41 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrint_int(RottenLanguageParser.Print_intContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#print_string}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrint_string(RottenLanguageParser.Print_stringContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitOperations(RottenLanguageParser.OperationsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#simple_compare}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSimple_compare(RottenLanguageParser.Simple_compareContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#hard_compare}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHard_compare(RottenLanguageParser.Hard_compareContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#while_cicle}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_cicle(RottenLanguageParser.While_cicleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#if_then}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_then(RottenLanguageParser.If_thenContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#global_program}.
 	 * @param ctx the parse tree

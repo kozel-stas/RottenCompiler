@@ -77,6 +77,16 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 */
 	void exitPrint_int(RottenLanguageParser.Print_intContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#print_string}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrint_string(RottenLanguageParser.Print_stringContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#print_string}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrint_string(RottenLanguageParser.Print_stringContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#operations}.
 	 * @param ctx the parse tree
 	 */
@@ -86,6 +96,46 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperations(RottenLanguageParser.OperationsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#simple_compare}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimple_compare(RottenLanguageParser.Simple_compareContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#simple_compare}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimple_compare(RottenLanguageParser.Simple_compareContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#hard_compare}.
+	 * @param ctx the parse tree
+	 */
+	void enterHard_compare(RottenLanguageParser.Hard_compareContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#hard_compare}.
+	 * @param ctx the parse tree
+	 */
+	void exitHard_compare(RottenLanguageParser.Hard_compareContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#while_cicle}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_cicle(RottenLanguageParser.While_cicleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#while_cicle}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_cicle(RottenLanguageParser.While_cicleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#if_then}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_then(RottenLanguageParser.If_thenContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#if_then}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_then(RottenLanguageParser.If_thenContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#global_program}.
 	 * @param ctx the parse tree

@@ -13,8 +13,17 @@ public enum Statement {
     PRINT_INT(RottenLanguageParser.Print_intContext.class, (ctx, visitor) -> {
         return ctx.print_int().accept(visitor);
     }),
+    PRINT_STRING(RottenLanguageParser.Print_stringContext.class, (ctx, visitor) -> {
+        return ctx.print_string().accept(visitor);
+    }),
     OPERATION_INT(RottenLanguageParser.OperationsContext.class, (ctx, visitor) -> {
         return ctx.operations().accept(visitor);
+    }),
+    WHILE_CICLE(RottenLanguageParser.While_cicleContext.class, (ctx, visitor) -> {
+        return ctx.while_cicle().accept(visitor);
+    }),
+    IF_THEN(RottenLanguageParser.If_thenContext.class, (ctx, visitor) -> {
+        return ctx.if_then().accept(visitor);
     }),;
 
 

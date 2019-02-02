@@ -9,8 +9,11 @@ public class CompilerFields {
     public static final String SEPARATOR = ";";
     public static final String ASSIGN = "=";
 
-    public static final String MAIN_METHOD = "private static main_program () ";
+    public static final String MAIN_METHOD = "private static void main_program () ";
 
     public static final String SOUT = "System.out.println(%s)";
+
+    public static final String WHILE = "while (%s)";
+    public static final String IF_ELSE = "if (%s) %s else %s";
 
 }
