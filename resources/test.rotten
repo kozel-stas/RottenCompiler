@@ -1,0 +1,6 @@
+main_program
+    begin
+        print(1);
+        int a = (1 + 1) * 3;
+        a = a + 3;
+    end
