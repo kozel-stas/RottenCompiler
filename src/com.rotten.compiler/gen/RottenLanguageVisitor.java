@@ -52,11 +52,23 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssign_int(RottenLanguageParser.Assign_intContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RottenLanguageParser#print_int}.
+	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_el}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrint_int(RottenLanguageParser.Print_intContext ctx);
+	T visitAssign_el(RottenLanguageParser.Assign_elContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#assing_set}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssing_set(RottenLanguageParser.Assing_setContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#print_id}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrint_id(RottenLanguageParser.Print_idContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#print_string}.
 	 * @param ctx the parse tree
@@ -69,6 +81,12 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitOperations(RottenLanguageParser.OperationsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#operarions_with_set}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperarions_with_set(RottenLanguageParser.Operarions_with_setContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#simple_compare}.
 	 * @param ctx the parse tree

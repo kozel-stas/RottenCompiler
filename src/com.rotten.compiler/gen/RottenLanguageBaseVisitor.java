@@ -65,7 +65,21 @@ public class RottenLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> im
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitPrint_int(RottenLanguageParser.Print_intContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAssign_el(RottenLanguageParser.Assign_elContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAssing_set(RottenLanguageParser.Assing_setContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitPrint_id(RottenLanguageParser.Print_idContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -80,6 +94,13 @@ public class RottenLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> im
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitOperations(RottenLanguageParser.OperationsContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitOperarions_with_set(RottenLanguageParser.Operarions_with_setContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

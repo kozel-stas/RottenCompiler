@@ -22,9 +22,11 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
 
     private final RottenLanguageParserV1 parserV1;
     private final VariableAndMethodRegister register = new VariableAndMethodRegister();
+    private final String name;
 
-    public RottenLanguageVisitorImplV1(RottenLanguageParserV1 parserV1) {
+    public RottenLanguageVisitorImplV1(RottenLanguageParserV1 parserV1, String name) {
         this.parserV1 = parserV1;
+        this.name = name;
     }
 
     @Override
@@ -91,6 +93,56 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     }
 
     @Override
+    public String visitAssign_el(RottenLanguageParser.Assign_elContext ctx) {
+        Variable variable = new Variable(ctx.ID().getText(), Preconditions.checkNotNull(VariableType.findByDisplayName(ctx.ELEMENT().getText())));
+        String out = variable.getVariableType().getOutName() + " " + variable.getID() + CompilerFields.ASSIGN + String.format(CompilerFields.NEW_ELEMENT, ctx.STRING()) + CompilerFields.SEPARATOR;
+        Preconditions.checkState(register.registerVariable(variable));
+        return out;
+    }
+
+    @Override
+    public String visitAssing_set(RottenLanguageParser.Assing_setContext ctx) {
+        Variable variable = new Variable(ctx.ID(0).getText(), Preconditions.checkNotNull(VariableType.findByDisplayName(ctx.SET().getText())));
+        String out = variable.getVariableType().getOutName() + " " + variable.getID() + CompilerFields.ASSIGN + CompilerFields.NEW_SET + CompilerFields.SEPARATOR;
+        Preconditions.checkState(register.registerVariable(variable));
+        return out + insertData(ctx);
+    }
+
+    @Override
+    public String visitPrint_id(RottenLanguageParser.Print_idContext ctx) {
+        if (ctx.digit_expression().ID() != null && ctx.digit_expression().digit_expression().isEmpty()) {
+            Variable variable = Preconditions.checkNotNull(register.getVariable(ctx.digit_expression().ID().getText()));
+            return String.format(CompilerFields.SOUT, variable.getID()) + CompilerFields.SEPARATOR;
+        } else {
+            return String.format(CompilerFields.SOUT, ctx.digit_expression().accept(this)) + CompilerFields.SEPARATOR;
+        }
+    }
+
+    private String insertData(RottenLanguageParser.Assing_setContext ctx) {
+        StringBuilder out = new StringBuilder();
+        Operation operation = Operation.findOperation(ctx);
+        if (operation == null) {
+            for (int i = 1; i < ctx.ID().size(); i++) {
+                Variable variable = Preconditions.checkNotNull(register.getVariable(ctx.ID(i).getText()));
+                if (variable.getVariableType() != VariableType.ELEMENT) {
+                    throw new UnsupportedOperationException();
+                }
+                out.append(ctx.ID(0).getText()).append(CompilerFields.DELIMITER).append(String.format(CompilerFields.ADD_NEW_ELEMENT, variable.getID())).append(CompilerFields.SEPARATOR);
+            }
+        } else {
+            for (int i = 0; i < 3; i++) {
+                Variable variable = Preconditions.checkNotNull(register.getVariable(ctx.ID(i).getText()));
+                if (variable.getVariableType() != VariableType.SET) {
+                    throw new UnsupportedOperationException();
+                }
+            }
+            out.append(ctx.ID(0)).append(CompilerFields.ASSIGN);
+            out.append(String.format(operation.getOverrideSet(), ctx.ID(1), ctx.ID(2))).append(CompilerFields.SEPARATOR);
+        }
+        return out.toString();
+    }
+
+    @Override
     public String visitOperations(RottenLanguageParser.OperationsContext ctx) {
         Variable variable = register.getVariable(ctx.ID().toString());
         if (variable == null || variable.getVariableType() != VariableType.INT) {
@@ -98,6 +150,21 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
         }
         validateDigitExpression(ctx.digit_expression());
         return variable.getID() + CompilerFields.ASSIGN + concatExpr(ctx.digit_expression()) + CompilerFields.SEPARATOR;
+    }
+
+    @Override
+    //TODO rework.
+    public String visitOperarions_with_set(RottenLanguageParser.Operarions_with_setContext ctx) {
+        Variable variable = Preconditions.checkNotNull(register.getVariable(ctx.ID(0).getText()));
+        Variable el = Preconditions.checkNotNull(register.getVariable(ctx.ID(1).getText()));
+        if (variable.getVariableType() != VariableType.SET || el.getVariableType() != VariableType.ELEMENT) {
+            throw new UnsupportedOperationException();
+        }
+        if (ctx.ADD() == null) {
+            return variable.getID() + CompilerFields.DELIMITER + String.format(CompilerFields.REMOVE_NEW_ELEMENT, el.getID()) + CompilerFields.SEPARATOR;
+        } else {
+            return variable.getID() + CompilerFields.DELIMITER + String.format(CompilerFields.REMOVE_NEW_ELEMENT, el.getID()) + CompilerFields.SEPARATOR;
+        }
     }
 
     @Override
@@ -181,7 +248,7 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
         register.registerMethodInvocation();
         //NPE checked before.
         String s = CompilerFields.SUB_METHOD + method.getMethodType().getReturnedType().getOutName()
-                + ctx.signature().accept(this) + ctx.block_return().accept(this);
+                + " " + ctx.ID() + ctx.signature().accept(this) + ctx.block_return().accept(this);
         register.registerMethodInvocationEnded();
         return s;
     }
@@ -269,13 +336,8 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     }
 
     @Override
-    public String visitPrint_int(RottenLanguageParser.Print_intContext ctx) {
-        return String.format(CompilerFields.SOUT, ctx.digit_expression().accept(this)) + CompilerFields.SEPARATOR;
-    }
-
-    @Override
     public String visitPrint_string(RottenLanguageParser.Print_stringContext ctx) {
-        return String.format(CompilerFields.SOUT, "\"" + ctx.ID() + "\"") + CompilerFields.SEPARATOR;
+        return String.format(CompilerFields.SOUT, ctx.STRING()) + CompilerFields.SEPARATOR;
     }
 
     @Override
@@ -310,7 +372,8 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
 
     @Override
     public String visit(ParseTree parseTree) {
-        return parseTree.accept(this);
+        String out = parseTree.accept(this);
+        return String.format(CompilerFields.STATIC_CONTENT, name, out);
     }
 
     @Override

@@ -77,15 +77,35 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 */
 	void exitAssign_int(RottenLanguageParser.Assign_intContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RottenLanguageParser#print_int}.
+	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_el}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrint_int(RottenLanguageParser.Print_intContext ctx);
+	void enterAssign_el(RottenLanguageParser.Assign_elContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RottenLanguageParser#print_int}.
+	 * Exit a parse tree produced by {@link RottenLanguageParser#assign_el}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrint_int(RottenLanguageParser.Print_intContext ctx);
+	void exitAssign_el(RottenLanguageParser.Assign_elContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#assing_set}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssing_set(RottenLanguageParser.Assing_setContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#assing_set}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssing_set(RottenLanguageParser.Assing_setContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#print_id}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrint_id(RottenLanguageParser.Print_idContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#print_id}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrint_id(RottenLanguageParser.Print_idContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#print_string}.
 	 * @param ctx the parse tree
@@ -106,6 +126,16 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperations(RottenLanguageParser.OperationsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#operarions_with_set}.
+	 * @param ctx the parse tree
+	 */
+	void enterOperarions_with_set(RottenLanguageParser.Operarions_with_setContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#operarions_with_set}.
+	 * @param ctx the parse tree
+	 */
+	void exitOperarions_with_set(RottenLanguageParser.Operarions_with_setContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#simple_compare}.
 	 * @param ctx the parse tree

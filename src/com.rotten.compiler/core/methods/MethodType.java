@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 public enum MethodType {
 
     RETURN_INT(VariableType.INT),
+    RETURN_EL(VariableType.ELEMENT),
+    RETURN_SET(VariableType.SET),
     RETURN_OPTIONAL(null),;
 
     @Nullable

@@ -1,72 +1,8 @@
+package com.rotten.compiler.core.inherit.types;
+
 import java.util.HashSet;
-import java.util.Objects;
 
-public class RunProgram.java {
-public static void main (String args[]){
-try{
-main_program();} catch (Exception ex){ex.printStackTrace();}
-}
-
-private static int sub(int b){
-System.out.println(String.valueOf(b));
-return b;
-}
-private static void main_program () {
-System.out.println(String.valueOf(1));
-int a=1;
-int b=sub (a);
-Element v=new Element("aaa");
-Set c=new Set();
-c.add(v);
-c.add(v);
-c.remove(v);
-Set h=new Set();
-h=Set.union(c,c);
-System.out.println(String.valueOf(h));
-while (a<3){
-a=a+1;
-System.out.println(String.valueOf("ROT"));
-}
-if (a==3) {
-System.out.println(String.valueOf("YES, dmwodo"));
-}
- else {
-}
-}
-
-}
-class Element {
-
-    private final String data;
-
-    public Element(String data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return data;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj instanceof Element) {
-            return ((Element) obj).data.equals(data);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(data);
-    }
-
-}
-
-class Set {
+public class Set {
 
     private final java.util.Set<Element> set = new HashSet<>();
 
@@ -145,4 +81,5 @@ class Set {
     public String toString() {
         return set.toString();
     }
+
 }

@@ -4,7 +4,9 @@ import javax.annotation.Nullable;
 
 public enum VariableType {
 
-    INT("int", "int"),;
+    INT("int", "int"),
+    ELEMENT("element", "Element"),
+    SET("set", "Set"),;
 
     private final String displayName;
     private final String outName;

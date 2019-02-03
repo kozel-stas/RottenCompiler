@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Objects;
 
-public class RunProgram.java {
+public class RunProgram {
 public static void main (String args[]){
 try{
 main_program();} catch (Exception ex){ex.printStackTrace();}
@@ -19,7 +19,6 @@ Element v=new Element("aaa");
 Set c=new Set();
 c.add(v);
 c.add(v);
-c.remove(v);
 Set h=new Set();
 h=Set.union(c,c);
 System.out.println(String.valueOf(h));

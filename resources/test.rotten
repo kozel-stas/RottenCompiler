@@ -3,6 +3,11 @@ main_program
         print(1);
         int a = 1;
         int b = call sub(a);
+        element v = "aaa";
+        set c = {v, v};
+        c.remove(v);
+        set h = c * c;
+        print(h);
         while (a < 3)
             begin
             a = a + 1;
@@ -10,7 +15,7 @@ main_program
             end
         if (a == 3)
             begin
-                print("YES");
+                print("YES, dmwodo");
             end
         then
             begin
