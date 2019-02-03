@@ -30,7 +30,10 @@ public class VariableAndMethodRegister {
     }
 
     public void registerMethodInvocation() {
-        variables.put(variables.size(), new HashMap<>());
+        Map<Integer, Set<Variable>> var = new HashMap<>();
+        // input method vars.
+        var.put(var.size(), new HashSet<>());
+        variables.put(variables.size(), var);
     }
 
     public boolean registerVariable(Variable variable) {

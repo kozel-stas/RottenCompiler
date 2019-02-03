@@ -1,7 +1,8 @@
 main_program
     begin
         print(1);
-        int a = 0 + 1;
+        int a = 1;
+        int b = call sub(a);
         while (a < 3)
             begin
             a = a + 1;
@@ -14,4 +15,10 @@ main_program
         then
             begin
             end
+    end
+
+sub_program int sub(int b)
+    begin
+        print(b);
+        return b;
     end

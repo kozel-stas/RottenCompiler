@@ -24,6 +24,12 @@ public enum Statement {
     }),
     IF_THEN(RottenLanguageParser.If_thenContext.class, (ctx, visitor) -> {
         return ctx.if_then().accept(visitor);
+    }),
+    METHOD_INVOCATION(RottenLanguageParser.Method_invokationContext.class, (ctx, visitor) -> {
+        return ctx.method_invokation().accept(visitor);
+    }),
+    METHOD_INVOCATION_AND_ASSIGN(RottenLanguageParser.Assign_varContext.class, (ctx, visitor) -> {
+        return ctx.assign_var().accept(visitor);
     }),;
 
 

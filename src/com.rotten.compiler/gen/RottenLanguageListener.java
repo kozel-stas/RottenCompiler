@@ -57,6 +57,16 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 */
 	void exitDigit_expression(RottenLanguageParser.Digit_expressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_var}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssign_var(RottenLanguageParser.Assign_varContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#assign_var}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssign_var(RottenLanguageParser.Assign_varContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_int}.
 	 * @param ctx the parse tree
 	 */
@@ -136,6 +146,86 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIf_then(RottenLanguageParser.If_thenContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(RottenLanguageParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(RottenLanguageParser.TypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#signature}.
+	 * @param ctx the parse tree
+	 */
+	void enterSignature(RottenLanguageParser.SignatureContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#signature}.
+	 * @param ctx the parse tree
+	 */
+	void exitSignature(RottenLanguageParser.SignatureContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#subprogram_return}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubprogram_return(RottenLanguageParser.Subprogram_returnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#subprogram_return}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubprogram_return(RottenLanguageParser.Subprogram_returnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#subprogram_non_return}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubprogram_non_return(RottenLanguageParser.Subprogram_non_returnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#subprogram_non_return}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubprogram_non_return(RottenLanguageParser.Subprogram_non_returnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#block_return}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock_return(RottenLanguageParser.Block_returnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#block_return}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock_return(RottenLanguageParser.Block_returnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#block_non_return}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock_non_return(RottenLanguageParser.Block_non_returnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#block_non_return}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock_non_return(RottenLanguageParser.Block_non_returnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#signature_method_invokation}.
+	 * @param ctx the parse tree
+	 */
+	void enterSignature_method_invokation(RottenLanguageParser.Signature_method_invokationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#signature_method_invokation}.
+	 * @param ctx the parse tree
+	 */
+	void exitSignature_method_invokation(RottenLanguageParser.Signature_method_invokationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#method_invokation}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethod_invokation(RottenLanguageParser.Method_invokationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#method_invokation}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethod_invokation(RottenLanguageParser.Method_invokationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#global_program}.
 	 * @param ctx the parse tree

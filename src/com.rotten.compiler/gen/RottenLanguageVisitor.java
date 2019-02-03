@@ -40,6 +40,12 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDigit_expression(RottenLanguageParser.Digit_expressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_var}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssign_var(RottenLanguageParser.Assign_varContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_int}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -87,6 +93,54 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIf_then(RottenLanguageParser.If_thenContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType(RottenLanguageParser.TypeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#signature}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSignature(RottenLanguageParser.SignatureContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#subprogram_return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubprogram_return(RottenLanguageParser.Subprogram_returnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#subprogram_non_return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubprogram_non_return(RottenLanguageParser.Subprogram_non_returnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#block_return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock_return(RottenLanguageParser.Block_returnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#block_non_return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock_non_return(RottenLanguageParser.Block_non_returnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#signature_method_invokation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSignature_method_invokation(RottenLanguageParser.Signature_method_invokationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#method_invokation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod_invokation(RottenLanguageParser.Method_invokationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#global_program}.
 	 * @param ctx the parse tree

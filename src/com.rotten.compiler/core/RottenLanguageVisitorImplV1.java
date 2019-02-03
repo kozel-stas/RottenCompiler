@@ -14,6 +14,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,14 +38,18 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     @Override
     public String visitBlock(RottenLanguageParser.BlockContext ctx) {
         register.registerNew​​VisibilityArea();
-        StringBuilder out = new StringBuilder(CompilerFields.BEGIN);
-        List<RottenLanguageParser.StatementContext> list = ctx.statement();
-        for (int i = 0; i < list.size(); i++) {
-            out.append(list.get(i).accept(this));
-        }
+        StringBuilder out = new StringBuilder(CompilerFields.BEGIN).append(invokeAllStatementsForBlock(ctx.statement()));
         out.append(CompilerFields.END);
         register.registerVisibilityAreaEnded();
         return out.toString();
+    }
+
+    private StringBuilder invokeAllStatementsForBlock(List<RottenLanguageParser.StatementContext> list) {
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            out.append(list.get(i).accept(this));
+        }
+        return out;
     }
 
     @Override
@@ -81,7 +86,7 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     @Override
     public String visitAssign_int(RottenLanguageParser.Assign_intContext ctx) {
         String out = VariableType.INT.getDisplayName() + " " + ctx.ID() + CompilerFields.ASSIGN + ctx.digit_expression().accept(this) + CompilerFields.SEPARATOR;
-        register.registerVariable(new Variable(ctx.ID().toString(), VariableType.INT));
+        Preconditions.checkState(register.registerVariable(new Variable(ctx.ID().toString(), VariableType.INT)));
         return out;
     }
 
@@ -93,6 +98,17 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
         }
         validateDigitExpression(ctx.digit_expression());
         return variable.getID() + CompilerFields.ASSIGN + concatExpr(ctx.digit_expression()) + CompilerFields.SEPARATOR;
+    }
+
+    @Override
+    public String visitAssign_var(RottenLanguageParser.Assign_varContext ctx) {
+        Variable variable = new Variable(ctx.ID().getText(), Preconditions.checkNotNull(VariableType.findByDisplayName(ctx.type().getText())));
+        Preconditions.checkState(register.registerVariable(variable));
+        Method method = Preconditions.checkNotNull(register.getRegisteredMethod(ctx.method_invokation().ID().getText()));
+        if (method.getMethodType() == MethodType.RETURN_OPTIONAL || method.getMethodType().getReturnedType() != variable.getVariableType()) {
+            throw new UnsupportedOperationException();
+        }
+        return variable.getVariableType().getOutName() + " " + variable.getID() + CompilerFields.ASSIGN + ctx.method_invokation().accept(this);
     }
 
     @Override
@@ -134,6 +150,125 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     }
 
     @Override
+    public String visitType(RottenLanguageParser.TypeContext ctx) {
+        VariableType variableType = VariableType.findByDisplayName(ctx.getText());
+        return Preconditions.checkNotNull(variableType).getOutName();
+    }
+
+    @Override
+    public String visitSignature(RottenLanguageParser.SignatureContext ctx) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(CompilerFields.OPEN_BRACKET);
+        for (int i = 0; i < ctx.ID().size(); i++) {
+            VariableType variableType = VariableType.findByDisplayName(ctx.type(i).getText());
+            Preconditions.checkNotNull(variableType);
+            register.registerVariable(new Variable(ctx.ID(i).getText(), variableType));
+            builder.append(ctx.type(i).accept(this)).append(" ").append(ctx.ID(i));
+            if (i != ctx.ID().size() - 1) {
+                builder.append(CompilerFields.COMMA);
+            }
+        }
+        builder.append(CompilerFields.CLOSE_BRACKET);
+        return builder.toString();
+    }
+
+    @Override
+    public String visitSubprogram_return(RottenLanguageParser.Subprogram_returnContext ctx) {
+        Method method = register.getRegisteredMethod(ctx.ID().toString());
+        if (method == null || method.getMethodType() == MethodType.RETURN_OPTIONAL) {
+            throw new UnsupportedOperationException();
+        }
+        register.registerMethodInvocation();
+        //NPE checked before.
+        String s = CompilerFields.SUB_METHOD + method.getMethodType().getReturnedType().getOutName()
+                + ctx.signature().accept(this) + ctx.block_return().accept(this);
+        register.registerMethodInvocationEnded();
+        return s;
+    }
+
+    @Override
+    public String visitSubprogram_non_return(RottenLanguageParser.Subprogram_non_returnContext ctx) {
+        Method method = register.getRegisteredMethod(ctx.ID().toString());
+        if (method == null || method.getMethodType() != MethodType.RETURN_OPTIONAL) {
+            throw new UnsupportedOperationException();
+        }
+        register.registerMethodInvocation();
+        String s = CompilerFields.SUB_METHOD + CompilerFields.VOID + " " + ctx.ID() + handleSignature(ctx.signature());
+        s += ctx.block_non_return() == null ? ctx.block().accept(this) : ctx.block_non_return().accept(this);
+        register.registerMethodInvocationEnded();
+        return s;
+    }
+
+    private String handleSignature(RottenLanguageParser.SignatureContext ctx) {
+        return ctx == null ? CompilerFields.OPEN_BRACKET + CompilerFields.CLOSE_BRACKET : ctx.accept(this);
+    }
+
+    @Override
+    public String visitBlock_return(RottenLanguageParser.Block_returnContext ctx) {
+        register.registerNew​​VisibilityArea();
+        Method method = Preconditions.checkNotNull(register.getRegisteredMethod(((RottenLanguageParser.Subprogram_returnContext) ctx.parent).ID().getText()));
+        StringBuilder out = new StringBuilder(CompilerFields.BEGIN).append(invokeAllStatementsForBlock(ctx.statement()));
+        out.append(CompilerFields.RETURN);
+        Variable variable = Preconditions.checkNotNull(register.getVariable(ctx.ID().getText()));
+        if (variable.getVariableType() != method.getMethodType().getReturnedType()) {
+            throw new UnsupportedOperationException();
+        }
+        out.append(" ").append(variable.getID()).append(CompilerFields.SEPARATOR).append(CompilerFields.END);
+        register.registerVisibilityAreaEnded();
+        return out.toString();
+    }
+
+    @Override
+    public String visitBlock_non_return(RottenLanguageParser.Block_non_returnContext ctx) {
+        register.registerNew​​VisibilityArea();
+        StringBuilder out = new StringBuilder(CompilerFields.BEGIN).append(invokeAllStatementsForBlock(ctx.statement()));
+        out.append(CompilerFields.RETURN);
+        out.append(CompilerFields.SEPARATOR);
+        out.append(CompilerFields.END);
+        register.registerVisibilityAreaEnded();
+        return out.toString();
+    }
+
+    @Override
+    public String visitSignature_method_invokation(RottenLanguageParser.Signature_method_invokationContext ctx) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(CompilerFields.OPEN_BRACKET);
+        Method method = register.getRegisteredMethod(((RottenLanguageParser.Method_invokationContext) ctx.parent).ID().getText());
+        Preconditions.checkNotNull(method);
+        if (method.getArguments().size() != ctx.ID().size()) {
+            throw new UnsupportedOperationException();
+        }
+        for (int i = 0; i < ctx.ID().size(); i++) {
+            Variable variable = register.getVariable(ctx.ID(i).getText());
+            if (variable == null || method.getArguments().get(i) != variable.getVariableType()) {
+                throw new UnsupportedOperationException();
+            }
+            builder.append(variable.getID());
+        }
+        return builder.append(CompilerFields.CLOSE_BRACKET).toString();
+    }
+
+    @Override
+    public String visitMethod_invokation(RottenLanguageParser.Method_invokationContext ctx) {
+        Method method = register.getRegisteredMethod(ctx.ID().toString());
+        if (method == null) {
+            throw new UnsupportedOperationException();
+        }
+        return method.getID() + " " + handleSignatureOfInvocation(ctx) + CompilerFields.SEPARATOR;
+    }
+
+    private String handleSignatureOfInvocation(RottenLanguageParser.Method_invokationContext ctx) {
+        if (ctx.signature_method_invokation() == null) {
+            Method method = Preconditions.checkNotNull(register.getRegisteredMethod(ctx.ID().getText()));
+            if (method.getArguments().size() != 0) {
+                throw new UnsupportedOperationException();
+            }
+            return CompilerFields.OPEN_BRACKET + CompilerFields.CLOSE_BRACKET;
+        }
+        return ctx.signature_method_invokation().accept(this);
+    }
+
+    @Override
     public String visitPrint_int(RottenLanguageParser.Print_intContext ctx) {
         return String.format(CompilerFields.SOUT, ctx.digit_expression().accept(this)) + CompilerFields.SEPARATOR;
     }
@@ -145,8 +280,32 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
 
     @Override
     public String visitGlobal_program(RottenLanguageParser.Global_programContext ctx) {
+        StringBuilder out = new StringBuilder();
         register.registerMethod(new Method(CompilerFields.MAIN_PROGRAM, MethodType.RETURN_OPTIONAL, Collections.emptyList()));
-        return ctx.program().accept(this);
+        List<RottenLanguageParser.Subprogram_non_returnContext> non_returnContexts = ctx.subprogram_non_return();
+        List<RottenLanguageParser.Subprogram_returnContext> returnContexts = ctx.subprogram_return();
+        for (RottenLanguageParser.Subprogram_returnContext ct : returnContexts) {
+            register.registerMethod(new Method(ct.ID().toString(), MethodType.RETURN_INT, collectMethodArguments(ct.signature())));
+            out.append(ct.accept(this));
+        }
+        for (RottenLanguageParser.Subprogram_non_returnContext ct : non_returnContexts) {
+            register.registerMethod(new Method(ct.ID().toString(), MethodType.RETURN_OPTIONAL, collectMethodArguments(ct.signature())));
+            out.append(ct.accept(this));
+        }
+        out.append(ctx.program().accept(this));
+        return out.toString();
+    }
+
+    private List<VariableType> collectMethodArguments(RottenLanguageParser.SignatureContext ctx) {
+        List<VariableType> variableTypes = new ArrayList<>();
+        if (ctx == null) {
+            return Collections.emptyList();
+        }
+        for (int i = 0; i < ctx.ID().size(); i++) {
+            VariableType variableType = VariableType.findByDisplayName(ctx.type(i).getText());
+            variableTypes.add(Preconditions.checkNotNull(variableType));
+        }
+        return variableTypes;
     }
 
     @Override
