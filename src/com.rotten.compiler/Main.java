@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintStream;
 
 public class Main {
@@ -25,18 +24,17 @@ public class Main {
             RottenLanguageParserV1 parser = new RottenLanguageParserV1(new CommonTokenStream(lexer));
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            System.setErr(new PrintStream(byteArrayOutputStream));
             ParseTree tree = parser.global_program();
             if (!byteArrayOutputStream.toString().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "Lexer error: " + byteArrayOutputStream.toString());
                 return;
             }
-            RottenLanguageVisitor<String> listVisitor = new RottenLanguageVisitorImplV1(parser, "RunProgram.java");
+            RottenLanguageVisitor<String> listVisitor = new RottenLanguageVisitorImplV1(parser, "RunProgram");
             String output = listVisitor.visit(tree);
             FileWriter fileWriter = new FileWriter("RunProgram.java");
             fileWriter.write(output);
             fileWriter.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -37,8 +37,8 @@ C_BRACKET=36
 K_O_BRACKET=37
 K_C_BRACKET=38
 'main_program'=1
-'='=2
-','=3
+','=2
+'='=3
 'sub_program'=4
 'begin'=5
 'set'=6

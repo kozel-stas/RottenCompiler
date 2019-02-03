@@ -7,7 +7,7 @@ main_program
         set c = {v, v};
         c.remove(v);
         set h = c * c;
-        print(h);
+        print(c);
         while (a < 3)
             begin
             a = a + 1;

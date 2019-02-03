@@ -1,20 +1,22 @@
 package com.rotten.compiler.core;
 
 import com.rotten.compiler.gen.RottenLanguageParser;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 import javax.annotation.Nullable;
 
 public enum Statement {
 
-    ASSIGN_INT(RottenLanguageParser.Assign_intContext.class, (ctx, visitor) -> {
-        return ctx.assign_int().accept(visitor);
+    ASSIGN(RottenLanguageParser.Assign_varContext.class, (ctx, visitor) -> {
+        return ctx.assign_var().accept(visitor);
     }),
-    PRINT_ID(RottenLanguageParser.Print_idContext.class, (ctx, visitor) -> {
-        return ctx.print_id().accept(visitor);
+    ASSIGN_SET(RottenLanguageParser.Assign_setContext.class, (ctx, visitor) -> {
+        return ctx.assign_set().accept(visitor);
     }),
-    PRINT_STRING(RottenLanguageParser.Print_stringContext.class, (ctx, visitor) -> {
-        return ctx.print_string().accept(visitor);
+    PRINT(RottenLanguageParser.PrintContext.class, (ctx, visitor) -> {
+        return ctx.print().accept(visitor);
     }),
     OPERATION_INT(RottenLanguageParser.OperationsContext.class, (ctx, visitor) -> {
         return ctx.operations().accept(visitor);
@@ -28,19 +30,12 @@ public enum Statement {
     METHOD_INVOCATION(RottenLanguageParser.Method_invokationContext.class, (ctx, visitor) -> {
         return ctx.method_invokation().accept(visitor);
     }),
-    METHOD_INVOCATION_AND_ASSIGN(RottenLanguageParser.Assign_varContext.class, (ctx, visitor) -> {
-        return ctx.assign_var().accept(visitor);
-    }),
-    ASSIGN_EL(RottenLanguageParser.Assign_elContext.class, (ctx, visitor) -> {
-        return ctx.assign_el().accept(visitor);
-    }),
-    ASSIGN_SET(RottenLanguageParser.Assing_setContext.class, (ctx, visitor) -> {
-        return ctx.assing_set().accept(visitor);
+    METHOD_INVOCATION_AND_ASSIGN(RottenLanguageParser.Assign_var_method_invocationContext.class, (ctx, visitor) -> {
+        return ctx.assign_var_method_invocation().accept(visitor);
     }),
     SET_OPERATIONS(RottenLanguageParser.Operarions_with_setContext.class, (ctx, visitor) -> {
         return ctx.operarions_with_set().accept(visitor);
     }),;
-
 
     private final Class clazz;
     private final InvocationAction<String> action;
@@ -51,7 +46,7 @@ public enum Statement {
     }
 
     @Nullable
-    public static Statement findStatement(RottenLanguageParser.StatementContext ctx) {
+    public static Statement findStatement(ParserRuleContext ctx) {
         for (Statement statement : Statement.values()) {
             if (ctx.getRuleContext(statement.clazz, 0) != null) {
                 return statement;

@@ -44,7 +44,7 @@ public class RottenLanguageLexer extends Lexer {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'main_program'", "'='", "','", "'sub_program'", "'begin'", "'set'", 
+			null, "'main_program'", "','", "'='", "'sub_program'", "'begin'", "'set'", 
 			"'element'", "'add'", "'remove'", "'end'", "'print'", "'int'", "'while'", 
 			"'if'", "'then'", "'call'", "'return'", "';'", "'.'", null, null, null, 
 			null, "'+'", "'-'", "'*'", "'/'", "'!'", "'=='", "'!='", "'<'", "'<='", 
@@ -157,7 +157,7 @@ public class RottenLanguageLexer extends Lexer {
 		"\3\2\2\2A\u00e2\3\2\2\2C\u00e5\3\2\2\2E\u00e7\3\2\2\2G\u00ea\3\2\2\2I"+
 		"\u00ec\3\2\2\2K\u00ee\3\2\2\2M\u00f0\3\2\2\2OP\7o\2\2PQ\7c\2\2QR\7k\2"+
 		"\2RS\7p\2\2ST\7a\2\2TU\7r\2\2UV\7t\2\2VW\7q\2\2WX\7i\2\2XY\7t\2\2YZ\7"+
-		"c\2\2Z[\7o\2\2[\4\3\2\2\2\\]\7?\2\2]\6\3\2\2\2^_\7.\2\2_\b\3\2\2\2`a\7"+
+		"c\2\2Z[\7o\2\2[\4\3\2\2\2\\]\7.\2\2]\6\3\2\2\2^_\7?\2\2_\b\3\2\2\2`a\7"+
 		"u\2\2ab\7w\2\2bc\7d\2\2cd\7a\2\2de\7r\2\2ef\7t\2\2fg\7q\2\2gh\7i\2\2h"+
 		"i\7t\2\2ij\7c\2\2jk\7o\2\2k\n\3\2\2\2lm\7d\2\2mn\7g\2\2no\7i\2\2op\7k"+
 		"\2\2pq\7p\2\2q\f\3\2\2\2rs\7u\2\2st\7g\2\2tu\7v\2\2u\16\3\2\2\2vw\7g\2"+

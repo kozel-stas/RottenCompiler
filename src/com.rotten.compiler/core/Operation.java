@@ -1,6 +1,7 @@
 package com.rotten.compiler.core;
 
 import com.rotten.compiler.gen.RottenLanguageParser;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 import javax.annotation.Nullable;
 
@@ -20,7 +21,7 @@ public enum Operation {
     }
 
     @Nullable
-    public static Operation findOperation(RottenLanguageParser.Assing_setContext ctx) {
+    public static Operation findOperation(ParserRuleContext ctx) {
         for (Operation operation : Operation.values()) {
             if (ctx.getToken(operation.type, 0) != null) {
                 return operation;

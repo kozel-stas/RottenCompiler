@@ -1,7 +1,9 @@
 package com.rotten.compiler.core.methods;
 
+import com.rotten.compiler.core.variables.Variable;
 import com.rotten.compiler.core.variables.VariableType;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public enum MethodType {
@@ -25,6 +27,15 @@ public enum MethodType {
 
     public boolean isOptional() {
         return this == RETURN_OPTIONAL;
+    }
+
+    public static MethodType findByReturnedType(VariableType variableType) {
+        for (MethodType methodType : MethodType.values()) {
+            if (variableType == methodType.getReturnedType()) {
+                return methodType;
+            }
+        }
+        return null;
     }
 
 }

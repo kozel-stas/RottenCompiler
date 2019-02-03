@@ -51,18 +51,6 @@ public class RottenLanguageBaseListener implements RottenLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(RottenLanguageParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpression(RottenLanguageParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDigit_expression(RottenLanguageParser.Digit_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -70,6 +58,54 @@ public class RottenLanguageBaseListener implements RottenLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDigit_expression(RottenLanguageParser.Digit_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntialize_set(RottenLanguageParser.Intialize_setContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntialize_set(RottenLanguageParser.Intialize_setContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntialize_element(RottenLanguageParser.Intialize_elementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntialize_element(RottenLanguageParser.Intialize_elementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssign_var_method_invocation(RottenLanguageParser.Assign_var_method_invocationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssign_var_method_invocation(RottenLanguageParser.Assign_var_method_invocationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssign_set(RottenLanguageParser.Assign_setContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssign_set(RottenLanguageParser.Assign_setContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -87,61 +123,13 @@ public class RottenLanguageBaseListener implements RottenLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign_int(RottenLanguageParser.Assign_intContext ctx) { }
+	@Override public void enterPrint(RottenLanguageParser.PrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign_int(RottenLanguageParser.Assign_intContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAssign_el(RottenLanguageParser.Assign_elContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAssign_el(RottenLanguageParser.Assign_elContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAssing_set(RottenLanguageParser.Assing_setContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAssing_set(RottenLanguageParser.Assing_setContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrint_id(RottenLanguageParser.Print_idContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrint_id(RottenLanguageParser.Print_idContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrint_string(RottenLanguageParser.Print_stringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrint_string(RottenLanguageParser.Print_stringContext ctx) { }
+	@Override public void exitPrint(RottenLanguageParser.PrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -226,6 +214,18 @@ public class RottenLanguageBaseListener implements RottenLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitType(RottenLanguageParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterType_1(RottenLanguageParser.Type_1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType_1(RottenLanguageParser.Type_1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

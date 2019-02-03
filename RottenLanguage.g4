@@ -4,7 +4,7 @@ program : 'main_program' block;
 
 block :BEGIN statement* END;
 
-statement :  assign_int | operations | assign_var | while_cicle | print_string | if_then | method_invokation | assign_el | assing_set | print_id | operarions_with_set;
+statement :  assign_var | assign_set | operations | assign_var_method_invocation | while_cicle | if_then | method_invokation | print | operarions_with_set;
 
 BEGIN : 'begin';
 SET : 'set';
@@ -46,12 +46,6 @@ C_BRACKET : ')';
 K_O_BRACKET : '{';
 K_C_BRACKET : '}';
 
-expression:	expression (MULTIPLY|DIVIDE) expression
-    |	expression (PLUS|MINUS) expression
-    |	ID
-    |	O_BRACKET expression C_BRACKET
-    ;
-
 digit_expression:	digit_expression (MULTIPLY|DIVIDE) digit_expression
     |	digit_expression (PLUS|MINUS) digit_expression
     |	ID
@@ -59,12 +53,13 @@ digit_expression:	digit_expression (MULTIPLY|DIVIDE) digit_expression
     | NUMBER
     ;
 
-assign_var : type ID '=' method_invokation;
-assign_int : INT ID '=' digit_expression SEPARATOR;
-assign_el : ELEMENT ID '=' STRING SEPARATOR;
-assing_set : SET ID '=' ((K_C_BRACKET K_O_BRACKET)|(K_O_BRACKET (ID ',')* (ID) K_C_BRACKET)|(ID(MULTIPLY|DIVIDE|PLUS|MINUS)ID)) SEPARATOR;
-print_id : PRINT O_BRACKET (digit_expression) C_BRACKET SEPARATOR;
-print_string : PRINT O_BRACKET (STRING) C_BRACKET SEPARATOR;
+intialize_set: (K_C_BRACKET K_O_BRACKET)|(K_O_BRACKET (ID ',')* (ID) K_C_BRACKET)|(ID(MULTIPLY|DIVIDE|PLUS|MINUS)ID);
+intialize_element: STRING;
+
+assign_var_method_invocation : type ID '=' method_invokation;
+assign_set : SET ID '=' (intialize_set) SEPARATOR;
+assign_var : type_1 ID '=' (digit_expression|intialize_element) SEPARATOR;
+print : PRINT O_BRACKET (ID|NUMBER|STRING) C_BRACKET SEPARATOR;
 operations : ID '=' digit_expression SEPARATOR;
 operarions_with_set: ID DELIMITER (ADD|REMOVE) (O_BRACKET ID C_BRACKET) SEPARATOR;
 
@@ -75,6 +70,7 @@ while_cicle: WHILE O_BRACKET (simple_compare|hard_compare) C_BRACKET block;
 if_then: IF O_BRACKET (simple_compare|hard_compare) C_BRACKET block THEN block;
 
 type: INT|ELEMENT|SET;
+type_1: INT|ELEMENT;
 signature: (O_BRACKET (type ID ',')* (type ID) C_BRACKET);
 subprogram_return : 'sub_program' type ID (signature|(O_BRACKET C_BRACKET)) block_return;
 subprogram_non_return : 'sub_program' ID (signature|(O_BRACKET C_BRACKET)) (block_non_return|block);

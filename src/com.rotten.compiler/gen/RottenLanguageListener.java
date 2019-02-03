@@ -37,16 +37,6 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 */
 	void exitStatement(RottenLanguageParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RottenLanguageParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpression(RottenLanguageParser.ExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RottenLanguageParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpression(RottenLanguageParser.ExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#digit_expression}.
 	 * @param ctx the parse tree
 	 */
@@ -56,6 +46,46 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDigit_expression(RottenLanguageParser.Digit_expressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#intialize_set}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntialize_set(RottenLanguageParser.Intialize_setContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#intialize_set}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntialize_set(RottenLanguageParser.Intialize_setContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#intialize_element}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntialize_element(RottenLanguageParser.Intialize_elementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#intialize_element}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntialize_element(RottenLanguageParser.Intialize_elementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_var_method_invocation}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssign_var_method_invocation(RottenLanguageParser.Assign_var_method_invocationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#assign_var_method_invocation}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssign_var_method_invocation(RottenLanguageParser.Assign_var_method_invocationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_set}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssign_set(RottenLanguageParser.Assign_setContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#assign_set}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssign_set(RottenLanguageParser.Assign_setContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_var}.
 	 * @param ctx the parse tree
@@ -67,55 +97,15 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 */
 	void exitAssign_var(RottenLanguageParser.Assign_varContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_int}.
+	 * Enter a parse tree produced by {@link RottenLanguageParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssign_int(RottenLanguageParser.Assign_intContext ctx);
+	void enterPrint(RottenLanguageParser.PrintContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RottenLanguageParser#assign_int}.
+	 * Exit a parse tree produced by {@link RottenLanguageParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssign_int(RottenLanguageParser.Assign_intContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RottenLanguageParser#assign_el}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssign_el(RottenLanguageParser.Assign_elContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RottenLanguageParser#assign_el}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssign_el(RottenLanguageParser.Assign_elContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RottenLanguageParser#assing_set}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssing_set(RottenLanguageParser.Assing_setContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RottenLanguageParser#assing_set}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssing_set(RottenLanguageParser.Assing_setContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RottenLanguageParser#print_id}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrint_id(RottenLanguageParser.Print_idContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RottenLanguageParser#print_id}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrint_id(RottenLanguageParser.Print_idContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RottenLanguageParser#print_string}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrint_string(RottenLanguageParser.Print_stringContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RottenLanguageParser#print_string}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrint_string(RottenLanguageParser.Print_stringContext ctx);
+	void exitPrint(RottenLanguageParser.PrintContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#operations}.
 	 * @param ctx the parse tree
@@ -186,6 +176,16 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitType(RottenLanguageParser.TypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#type_1}.
+	 * @param ctx the parse tree
+	 */
+	void enterType_1(RottenLanguageParser.Type_1Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#type_1}.
+	 * @param ctx the parse tree
+	 */
+	void exitType_1(RottenLanguageParser.Type_1Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#signature}.
 	 * @param ctx the parse tree

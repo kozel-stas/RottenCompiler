@@ -28,17 +28,35 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(RottenLanguageParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RottenLanguageParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpression(RottenLanguageParser.ExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#digit_expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDigit_expression(RottenLanguageParser.Digit_expressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#intialize_set}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntialize_set(RottenLanguageParser.Intialize_setContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#intialize_element}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntialize_element(RottenLanguageParser.Intialize_elementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_var_method_invocation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssign_var_method_invocation(RottenLanguageParser.Assign_var_method_invocationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_set}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssign_set(RottenLanguageParser.Assign_setContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_var}.
 	 * @param ctx the parse tree
@@ -46,35 +64,11 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssign_var(RottenLanguageParser.Assign_varContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_int}.
+	 * Visit a parse tree produced by {@link RottenLanguageParser#print}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign_int(RottenLanguageParser.Assign_intContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RottenLanguageParser#assign_el}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssign_el(RottenLanguageParser.Assign_elContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RottenLanguageParser#assing_set}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssing_set(RottenLanguageParser.Assing_setContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RottenLanguageParser#print_id}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrint_id(RottenLanguageParser.Print_idContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RottenLanguageParser#print_string}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrint_string(RottenLanguageParser.Print_stringContext ctx);
+	T visitPrint(RottenLanguageParser.PrintContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#operations}.
 	 * @param ctx the parse tree
@@ -117,6 +111,12 @@ public interface RottenLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitType(RottenLanguageParser.TypeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RottenLanguageParser#type_1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType_1(RottenLanguageParser.Type_1Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link RottenLanguageParser#signature}.
 	 * @param ctx the parse tree
