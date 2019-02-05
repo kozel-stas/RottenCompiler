@@ -7,10 +7,18 @@ public class Variable {
 
     private final String ID;
     private final VariableType variableType;
+    private final boolean constant;
 
     public Variable(String id, VariableType variableType) {
         ID = id;
         this.variableType = variableType;
+        this.constant = false;
+    }
+
+    public Variable(String id, VariableType variableType, boolean constant) {
+        ID = id;
+        this.variableType = variableType;
+        this.constant = constant;
     }
 
     public String getID() {
@@ -19,6 +27,10 @@ public class Variable {
 
     public VariableType getVariableType() {
         return variableType;
+    }
+
+    public boolean isConstant() {
+        return constant;
     }
 
     @Override

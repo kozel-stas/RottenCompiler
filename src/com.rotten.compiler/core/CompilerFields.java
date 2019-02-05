@@ -10,6 +10,7 @@ public class CompilerFields {
     public static final String ASSIGN = "=";
 
     public static final String MAIN_METHOD = "private static void main_program () ";
+    public static final String GLOBAL_VAR = "private static ";
     public static final String SUB_METHOD = "private static ";
     public static final String VOID = "void";
     public static final String COMMA = ",";
@@ -18,8 +19,10 @@ public class CompilerFields {
     public static final String SOUT = "System.out.println(String.valueOf(%s))";
 
     public static final String WHILE = "while (%s)";
+    public static final String FOR_EACH = "for (%s:%s)";
     public static final String IF_ELSE = "if (%s) %s else %s";
     public static final String NEW_ELEMENT = "new Element(%s)";
+    public static final String ELEMENT = "Element";
     public static final String NEW_SET = "new Set()";
 
     public static final String OPEN_BRACKET = "(";
@@ -31,6 +34,7 @@ public class CompilerFields {
     public static final String STATIC_CONTENT = "" +
             "import java.util.HashSet;\n" +
             "import java.util.Objects;\n" +
+            "import java.util.Iterator;\n" +
             "\n" +
             "public class %s {\n" +
             "public static void main (String args[]){\n" +
@@ -76,7 +80,7 @@ public class CompilerFields {
             "\n" +
             "}\n" +
             "\n" +
-            "class Set {\n" +
+            "class Set implements Iterable<Element> {\n" +
             "\n" +
             "    private final java.util.Set<Element> set = new HashSet<>();\n" +
             "\n" +
@@ -155,5 +159,11 @@ public class CompilerFields {
             "    public String toString() {\n" +
             "        return set.toString();\n" +
             "    }\n" +
+            "    " +
+            "@Override\n" +
+            "public Iterator<Element> iterator() {\n" +
+            "   return set.iterator();\n" +
+            "}\n" +
+            "" +
             "}\n";
 }

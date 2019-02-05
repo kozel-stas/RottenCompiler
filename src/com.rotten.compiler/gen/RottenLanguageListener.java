@@ -167,6 +167,36 @@ public interface RottenLanguageListener extends ParseTreeListener {
 	 */
 	void exitIf_then(RottenLanguageParser.If_thenContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#for_each}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor_each(RottenLanguageParser.For_eachContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#for_each}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor_each(RottenLanguageParser.For_eachContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#global_assign_set}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobal_assign_set(RottenLanguageParser.Global_assign_setContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#global_assign_set}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobal_assign_set(RottenLanguageParser.Global_assign_setContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RottenLanguageParser#global_assign_var}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobal_assign_var(RottenLanguageParser.Global_assign_varContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RottenLanguageParser#global_assign_var}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobal_assign_var(RottenLanguageParser.Global_assign_varContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RottenLanguageParser#type}.
 	 * @param ctx the parse tree
 	 */

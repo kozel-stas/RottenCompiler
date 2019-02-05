@@ -1,8 +1,10 @@
+global int d = 5;
+
 main_program
     begin
         print(1);
-        int a = 1;
-        int b = call sub(a);
+        int a = 1 ;
+        int const b = call sub(a);
         element v = "aaa";
         set c = {v, v};
         c.remove(v);
@@ -19,6 +21,10 @@ main_program
             end
         then
             begin
+            end
+        for (element e : h)
+            begin
+                print(e);
             end
     end
 

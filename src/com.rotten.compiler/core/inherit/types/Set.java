@@ -1,8 +1,9 @@
 package com.rotten.compiler.core.inherit.types;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
-public class Set {
+public class Set implements Iterable<Element> {
 
     private final java.util.Set<Element> set = new HashSet<>();
 
@@ -80,6 +81,11 @@ public class Set {
     @Override
     public String toString() {
         return set.toString();
+    }
+
+    @Override
+    public Iterator<Element> iterator() {
+        return set.iterator();
     }
 
 }

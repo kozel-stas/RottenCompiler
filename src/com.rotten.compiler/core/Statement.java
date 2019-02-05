@@ -35,7 +35,10 @@ public enum Statement {
     }),
     SET_OPERATIONS(RottenLanguageParser.Operarions_with_setContext.class, (ctx, visitor) -> {
         return ctx.operarions_with_set().accept(visitor);
-    }),;
+    }),
+    FOR_EACH(RottenLanguageParser.For_eachContext.class, (ctx, visitor) -> {
+        return ctx.for_each().accept(visitor);
+    });
 
     private final Class clazz;
     private final InvocationAction<String> action;

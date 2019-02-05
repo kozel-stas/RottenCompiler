@@ -92,7 +92,7 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
 
     @Override
     public String visitAssign_var_method_invocation(RottenLanguageParser.Assign_var_method_invocationContext ctx) {
-        Variable variable = new Variable(ctx.ID().getText(), Preconditions.checkNotNull(VariableType.findByDisplayName(ctx.type().getText())));
+        Variable variable = new Variable(ctx.ID().getText(), Preconditions.checkNotNull(VariableType.findByDisplayName(ctx.type().getText())), ctx.CONST() != null);
         Preconditions.checkState(register.registerVariable(variable));
         Method method = Preconditions.checkNotNull(register.getRegisteredMethod(ctx.method_invokation().ID().getText()));
         if (method.getMethodType() == MethodType.RETURN_OPTIONAL || method.getMethodType().getReturnedType() != variable.getVariableType()) {
@@ -116,19 +116,32 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
 
     @Override
     public String visitAssign_var(RottenLanguageParser.Assign_varContext ctx) {
+        return processAssignVar(ctx, false);
+    }
+
+    private String processAssignVar(RottenLanguageParser.Assign_varContext ctx, boolean global) {
         VariableType variableType = Preconditions.checkNotNull(VariableType.findByDisplayName(ctx.type_1().getText()));
         String out = variableType.getOutName() + " " + ctx.ID() + CompilerFields.ASSIGN + variableType.invokeInitLine(ctx, this);
-        Preconditions.checkState(register.registerVariable(new Variable(ctx.ID().toString(), variableType)));
+        if (!global) {
+            Preconditions.checkState(register.registerVariable(new Variable(ctx.ID().toString(), variableType, ctx.CONST() != null)));
+        } else {
+            Preconditions.checkState(register.registerGlobalVariable(new Variable(ctx.ID().toString(), variableType, ctx.CONST() != null)));
+        }
         return out;
     }
 
     @Override
     public String visitAssign_set(RottenLanguageParser.Assign_setContext ctx) {
+        return processAssignSet(ctx, false);
+    }
+
+    private String processAssignSet(RottenLanguageParser.Assign_setContext ctx, boolean global) {
         StringBuilder out = new StringBuilder();
         Operation operation = Operation.findOperation(ctx.intialize_set());
+        Variable varForRegister;
         if (operation == null) {
             out.append(VariableType.SET.invokeInitLine(ctx, this));
-            Preconditions.checkState(register.registerVariable(new Variable(ctx.ID().toString(), VariableType.SET)));
+            varForRegister = new Variable(ctx.ID().toString(), VariableType.SET, ctx.CONST() != null);
         } else {
             for (int i = 1; i < 2; i++) {
                 Variable variable = Preconditions.checkNotNull(register.getVariable(ctx.intialize_set().ID(i).getText()));
@@ -138,7 +151,12 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
             }
             out.append(VariableType.SET.getOutName()).append(" ").append(ctx.ID()).append(CompilerFields.ASSIGN);
             out.append(String.format(operation.getOverrideSet(), ctx.intialize_set().ID(0), ctx.intialize_set().ID(1))).append(CompilerFields.SEPARATOR);
-            Preconditions.checkState(register.registerVariable(new Variable(ctx.ID().toString(), VariableType.SET)));
+            varForRegister = new Variable(ctx.ID().toString(), VariableType.SET);
+        }
+        if (!global) {
+            Preconditions.checkState(register.registerVariable(varForRegister));
+        } else {
+            Preconditions.checkState(register.registerGlobalVariable(varForRegister));
         }
         return out.toString();
     }
@@ -156,7 +174,7 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     @Override
     public String visitOperations(RottenLanguageParser.OperationsContext ctx) {
         Variable variable = register.getVariable(ctx.ID().toString());
-        if (variable == null || variable.getVariableType() != VariableType.INT) {
+        if (variable == null || variable.getVariableType() != VariableType.INT || variable.isConstant()) {
             throw new UnsupportedOperationException();
         }
         validateDigitExpression(ctx.digit_expression());
@@ -168,7 +186,7 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     public String visitOperarions_with_set(RottenLanguageParser.Operarions_with_setContext ctx) {
         Variable variable = Preconditions.checkNotNull(register.getVariable(ctx.ID(0).getText()));
         Variable el = Preconditions.checkNotNull(register.getVariable(ctx.ID(1).getText()));
-        if (variable.getVariableType() != VariableType.SET || el.getVariableType() != VariableType.ELEMENT) {
+        if (variable.getVariableType() != VariableType.SET || el.getVariableType() != VariableType.ELEMENT || variable.isConstant()) {
             throw new UnsupportedOperationException();
         }
         if (ctx.ADD() == null) {
@@ -214,6 +232,26 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
     @Override
     public String visitIf_then(RottenLanguageParser.If_thenContext ctx) {
         return String.format(CompilerFields.IF_ELSE, handlerCompare(ctx.hard_compare(), ctx.simple_compare()), ctx.block(0).accept(this), ctx.block(1).accept(this));
+    }
+
+    @Override
+    public String visitFor_each(RottenLanguageParser.For_eachContext ctx) {
+        Variable variable = register.getVariable(ctx.ID(1).getText());
+        if (variable == null || variable.getVariableType() != VariableType.SET) {
+            throw new UnsupportedOperationException();
+        }
+        Preconditions.checkState(register.registerVariable(new Variable(ctx.ID(0).getText(), VariableType.ELEMENT)));
+        return String.format(CompilerFields.FOR_EACH, CompilerFields.ELEMENT + " " + ctx.ID(0).getText(), variable.getID()) + ctx.block().accept(this);
+    }
+
+    @Override
+    public String visitGlobal_assign_set(RottenLanguageParser.Global_assign_setContext ctx) {
+        return CompilerFields.GLOBAL_VAR + processAssignSet(ctx.assign_set(), true);
+    }
+
+    @Override
+    public String visitGlobal_assign_var(RottenLanguageParser.Global_assign_varContext ctx) {
+        return CompilerFields.GLOBAL_VAR + processAssignVar(ctx.assign_var(), true);
     }
 
     @Override
@@ -347,6 +385,12 @@ public class RottenLanguageVisitorImplV1 implements RottenLanguageVisitor<String
         register.registerMethod(new Method(CompilerFields.MAIN_PROGRAM, MethodType.RETURN_OPTIONAL, Collections.emptyList()));
         List<RottenLanguageParser.Subprogram_non_returnContext> non_returnContexts = ctx.subprogram_non_return();
         List<RottenLanguageParser.Subprogram_returnContext> returnContexts = ctx.subprogram_return();
+        for (RottenLanguageParser.Global_assign_varContext ct : ctx.global_assign_var()) {
+            out.append(ct.accept(this));
+        }
+        for (RottenLanguageParser.Global_assign_setContext ct : ctx.global_assign_set()) {
+            out.append(ct.accept(this));
+        }
         for (RottenLanguageParser.Subprogram_returnContext ct : returnContexts) {
             VariableType variableType = Preconditions.checkNotNull(VariableType.findByDisplayName(ct.type().getText()));
             register.registerMethod(new Method(ct.ID().toString(), Preconditions.checkNotNull(MethodType.findByReturnedType(variableType)), collectMethodArguments(ct.signature())));

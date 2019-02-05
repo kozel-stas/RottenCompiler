@@ -9,8 +9,8 @@ import java.util.*;
 public class VariableAndMethodRegister {
 
     private final List<Method> methods = new ArrayList<>();
+    private final Set<Variable> globalVariables = new HashSet<>();
     // Stack of method -> inner stack -> id
-    //TODO: global variables.
     private final Map<Integer, Map<Integer, Set<Variable>>> variables = new HashMap<>();
 
     public boolean registerMethod(Method method) {
@@ -45,12 +45,27 @@ public class VariableAndMethodRegister {
         return false;
     }
 
+    public boolean registerGlobalVariable(Variable variable) {
+        Variable registered = getVariable(variable.getID());
+        if (registered == null) {
+            return globalVariables.add(variable);
+        }
+        return false;
+    }
+
     public Variable getVariable(String ID) {
-        Map<Integer, Set<Variable>> methodVariables = Preconditions.checkNotNull(variables.get(variables.size() - 1));
-        for (Set<Variable> list : methodVariables.values()) {
-            for (Variable variable : list) {
-                if (variable.getID().equals(ID)) {
-                    return variable;
+        for (Variable global : globalVariables) {
+            if (global.getID().equals(ID)) {
+                return global;
+            }
+        }
+        Map<Integer, Set<Variable>> methodVariables = variables.get(variables.size() - 1);
+        if (methodVariables != null) {
+            for (Set<Variable> list : methodVariables.values()) {
+                for (Variable variable : list) {
+                    if (variable.getID().equals(ID)) {
+                        return variable;
+                    }
                 }
             }
         }
